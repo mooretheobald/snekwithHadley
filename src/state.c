@@ -29,14 +29,9 @@ game_state_t *create_default_state() {
 #define ROWS 18
 #define COLS 20
 
-  char** bard[ROWS][COLS];
-  for (int i = 0; i < ROWS; i++) {
-      for (int j = 0; j < COLS; i++) {
-          if (i == 0 | j == 0 | (i == ROWS - 1) | (j== COLS - 1)) {
-              bard[i][j] == '#';
-          }
-      }
-  }
+  char bard[ROWS][COLS] = { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' }, 
+                            { #, 
+                            }
   //
   // Make og snake
   // Tail
@@ -47,8 +42,7 @@ game_state_t *create_default_state() {
   bard[2][4] = 'D';
   // Make first fruit
   bard[2][9] = "*";
-
-  return bard;
+  return char* bardd = &bard;
 }
 
 /* Task 2 */
