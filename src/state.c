@@ -24,7 +24,31 @@ static void update_head(game_state_t *state, unsigned int snum);
 /* Task 1 */
 game_state_t *create_default_state() {
   // TODO: Implement this function.
-  return NULL;
+  //
+  // Make walls
+#define ROWS 18
+#define COLS 20
+
+  char** bard[ROWS][COLS];
+  for (int i = 0; i < ROWS; i++) {
+      for (int j = 0; j < COLS; i++) {
+          if (i == 0 | j == 0 | (i == ROWS - 1) | (j== COLS - 1)) {
+              bard[i][j] == '#';
+          }
+      }
+  }
+  //
+  // Make og snake
+  // Tail
+  bard[2][2] = 'd';
+  // Mid
+  bard[2][3] = '>';
+  // Head
+  bard[2][4] = 'D';
+  // Make first fruit
+  bard[2][9] = "*";
+
+  return bard;
 }
 
 /* Task 2 */
