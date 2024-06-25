@@ -25,7 +25,29 @@ static void update_head(game_state_t *state, unsigned int snum);
 game_state_t *create_default_state() {
   // TODO: Implement this function.
   //
-  // Make walls
+  //Make game_state_t struct instance 
+  //[has #rows, 
+  //#snakes, 
+  //char ** board, 
+  //and snake_t * snakes]
+  game_state_t * default_board;
+  default_board = malloc(sizeof(game_state_t));
+  default_board -> num_rows = 18;
+  default_board -> num_snakes = 1;
+  default_board -> snakes = ;//arr of snake_t instances; later when not hardcoding will probably have to make appear?? 
+  default_board -> board = ; //HARDCODE THE BOARD
+                             
+  
+
+
+
+  return default_board;
+  //note: eventually have to free default_board
+
+
+    
+
+
 #define ROWS 18
 #define COLS 20
 
