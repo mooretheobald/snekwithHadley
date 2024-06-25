@@ -36,6 +36,18 @@ game_state_t *create_default_state() {
   default_board -> num_snakes = 1;
   default_board -> snakes = ;//arr of snake_t instances; later when not hardcoding will probably have to make appear?? 
   default_board -> board = ; //HARDCODE THE BOARD
+  
+
+  board = malloc(sizeof(inner thing));
+
+
+  int curr_row = 0;
+  while (curr_row < (default_board->num_rows)) { //Might be different pointer notation???
+   board[curr_row] = malloc(array of new stuff);
+   if ((curr_row == 0) | (curr_row == num_rows-1)) {
+   }
+
+  }
                              
   
 
@@ -43,6 +55,8 @@ game_state_t *create_default_state() {
 
   return default_board;
   //note: eventually have to free default_board
+  //"strcpy may be helpful" 
+
 
 
     
