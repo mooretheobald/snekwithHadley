@@ -50,25 +50,29 @@ game_state_t *create_default_state() {
   //Hardcoded layout:
   const char* initial_board[] = {
       //EACH ROW
-      "##################",
-      "#                #",
-      "# d>D    *       #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "#                #",
-      "##################"
+      //
+      "####################",
+      "#                  #",
+      "# d>D    *         #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "#                  #",
+      "####################"
   };
 
+
+          
   //fill board w initial_board hardcoded template
 
   for (int i = 0; i < default_board->num_rows; i++) {
@@ -76,7 +80,7 @@ game_state_t *create_default_state() {
   }
 
   //make snakes and all; initiailze the snake
-  default_board->snakes = malloc(state->num_snakes * sizeof(snake_t)); //makes snake w room for 1 snake
+  default_board->snakes = malloc(default_board->num_snakes * sizeof(snake_t)); //makes snake w room for 1 snake
                                                                     
   //5 attributes to fill in!!!
   default_board->snakes[0].tail_row = 2;
