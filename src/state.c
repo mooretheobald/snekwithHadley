@@ -50,11 +50,13 @@ game_state_t *create_default_state() {
   };
 
   for (SAME LOOP AS ABOVE) {
-      strcpy(dest default_board->board[i], src initial_board[i]); //CLEAN UP
+      strcpy(default_board->board[i], initial_board[i]); //CLEAN UP strcpy(dest, src)
   }
 
   //make snakes and all; initiailze the snake
-
+  default_board->snakes = malloc(state->num_snakes * sizeof(snake_t)); //makes snake w room for 1 snake
+                                                                    
+  default_board->snakes[0]. //5 attributes to fill in!!!
 
   return default_board;
   //note: eventually have to free default_board
