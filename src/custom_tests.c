@@ -97,7 +97,22 @@ bool test_is_vowel() {
 /* Task 4.1 */
 
 bool test_is_tail() {
-  // TODO: Implement this function.
+  bool case1 = is_tail('a');
+  bool case2 = is_tail('s');
+  bool case3 = is_tail('d');
+  bool case4 = is_tail('w');
+  bool case5 = is_tail('A');
+  bool case6 = is_tail('>');
+  bool case7 = is_tail('x');
+  bool case8 = is_tail('h');
+  if (!assert_true("case1", case1)) return false;
+  if (!assert_true("case2", case2)) return false;
+  if (!assert_true("case3", case3)) return false;
+  if (!assert_true("case4", case4)) return false;
+  if (!assert_false("case5", case5)) return false;
+  if (!assert_false("case6", case6)) return false;
+  if (!assert_false("case7", case7)) return false;
+  if (!assert_false("case8", case8)) return false;
   return true;
 }
 
@@ -107,7 +122,22 @@ bool test_is_head() {
 }
 
 bool test_is_snake() {
-  // TODO: Implement this function.
+  bool case1 = is_snake('a');
+  bool case2 = is_snake('s');
+  bool case3 = is_snake('d');
+  bool case4 = is_snake('w');
+  bool case5 = is_snake('A');
+  bool case6 = is_snake('>');
+  bool case7 = is_snake('x');
+  bool case8 = is_tail('h');
+  if (!assert_true("case1", case1)) return false;
+  if (!assert_true("case2", case2)) return false;
+  if (!assert_true("case3", case3)) return false;
+  if (!assert_true("case4", case4)) return false;
+  if (!assert_false("case5", case5)) return false;
+  if (!assert_false("case6", case6)) return false;
+  if (!assert_false("case7", case7)) return false;
+  if (!assert_false("case8", case8)) return false;
   return true;
 }
 
