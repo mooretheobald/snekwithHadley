@@ -30,33 +30,60 @@ game_state_t *create_default_state() {
   //#snakes, 
   //char ** board, 
   //and snake_t * snakes]
+  
   game_state_t * default_board;
+  
   default_board = malloc(sizeof(game_state_t));
-  default_board -> num_rows = 18;
-  default_board -> num_snakes = 1;
-  default_board -> snakes = ;//arr of snake_t instances; later when not hardcoding will probably have to make appear?? 
+  
+  default_board->num_rows = 18;
+  
+  default_board->num_snakes = 1;
+
+
   //making the board which is an array of strings
-  default_board -> board = malloc(default_board->num_rows * sizeof(char *)); //allocate memory
+  default_board-> board = malloc(default_board->num_rows * sizeof(char *)); //allocate memory
                              //HARDCODE THE BOARD //board = malloc(sizeof(inner thing));
-  //Initialize each row:
-  for (int i = 0; i < default_board-> num_rows; i++) {
+  //Allocate memory for each row:
+  for (int i = 0; i < default_board->num_rows; i++) {
     default_board->board[i] = malloc(21 * sizeof(char)); //20 columns + 1 for null terminator!
   }
-  //Initialize board w hardcoded layout:
+  //Hardcoded layout:
   const char* initial_board[] = {
       //EACH ROW
-      "####" etc,
-      "#     #",
+      "##################",
+      "#                #",
+      "# d>D    *       #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "#                #",
+      "##################"
   };
 
-  for (SAME LOOP AS ABOVE) {
-      strcpy(default_board->board[i], initial_board[i]); //CLEAN UP strcpy(dest, src)
+  //fill board w initial_board hardcoded template
+
+  for (int i = 0; i < default_board->num_rows; i++) {
+      strcpy(default_board->board[i], initial_board[i]); //strcpy(dest, src)
   }
 
   //make snakes and all; initiailze the snake
   default_board->snakes = malloc(state->num_snakes * sizeof(snake_t)); //makes snake w room for 1 snake
                                                                     
-  default_board->snakes[0]. //5 attributes to fill in!!!
+  //5 attributes to fill in!!!
+  default_board->snakes[0].tail_row = 2;
+  default_board->snakes[0].tail_col = 2;
+  default_board->snakes[0].head_row = 2;
+  default_board->snakes[0].head_col = 4;
+  default_board->snakes[0].live = true;
 
   return default_board;
   //note: eventually have to free default_board
@@ -64,7 +91,7 @@ game_state_t *create_default_state() {
 
 
     
-
+/*
 
 #define ROWS 18
 #define COLS 20
@@ -88,6 +115,7 @@ game_state_t *create_default_state() {
   // Make first fruit
   *(bard[2] + 9) = "*";
   return bard;
+  */
 }
 
 /* Task 2 */
