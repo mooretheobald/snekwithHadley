@@ -127,27 +127,73 @@ bool test_is_snake() {
   bool case3 = is_snake('d');
   bool case4 = is_snake('w');
   bool case5 = is_snake('A');
-  bool case6 = is_snake('>');
-  bool case7 = is_snake('x');
-  bool case8 = is_tail('h');
+  bool case6 = is_snake('W');
+  bool case7 = is_snake('S');
+  bool case8 = is_snake('D');
+  bool case9 = is_snake('x');
+  bool case10 = is_snake('^');
+  bool case11 = is_snake('v');
+  bool case12 = is_snake('>');
+  bool case13 = is_snake('<');
+  bool case14 = is_snake('q');
+  bool case15 = is_snake('!');
+  bool case16 = is_snake('X');
   if (!assert_true("case1", case1)) return false;
   if (!assert_true("case2", case2)) return false;
   if (!assert_true("case3", case3)) return false;
   if (!assert_true("case4", case4)) return false;
-  if (!assert_false("case5", case5)) return false;
-  if (!assert_false("case6", case6)) return false;
-  if (!assert_false("case7", case7)) return false;
-  if (!assert_false("case8", case8)) return false;
+  if (!assert_true("case5", case5)) return false;
+  if (!assert_true("case6", case6)) return false;
+  if (!assert_true("case7", case7)) return false;
+  if (!assert_true("case8", case8)) return false;
+  if (!assert_true("case9", case9)) return false;
+  if (!assert_true("case10", case10)) return false;
+  if (!assert_true("case11", case11)) return false;
+  if (!assert_true("case12", case12)) return false;
+  if (!assert_true("case13", case13)) return false;
+  if (!assert_false("case14", case14)) return false;
+  if (!assert_false("case15", case15)) return false;
+  if (!assert_false("case16", case16)) return false;
   return true;
 }
 
 bool test_body_to_tail() {
-  // TODO: Implement this function.
+  char case1 = body_to_tail('^');
+  char case2 = body_to_tail('<');
+  char case3 = body_to_tail('v');
+  char case4 = body_to_tail('>');
+  char case5 = body_to_tail('x');
+  char case6 = body_to_tail('W');
+  char case7 = body_to_tail('s');
+  char case8 = body_to_tail('j');
+  if (!assert_equals_char("case1", 'w', case1)) return false;
+  if (!assert_equals_char("case2", 'a', case2)) return false;
+  if (!assert_equals_char("case3", 's', case3)) return false;
+  if (!assert_equals_char("case4", 'd', case4)) return false;
+  if (!assert_equals_char("case5", 'x', case5)) return false;
+  if (!assert_equals_char("case6", 'W', case6)) return false;
+  if (!assert_equals_char("case7", 's', case7)) return false;
+  if (!assert_equals_char("case8", 'j', case8)) return false;
   return true;
-}
+  }
 
 bool test_head_to_body() {
-  // TODO: Implement this function.
+  char case1 = head_to_body('W');
+  char case2 = head_to_body('A');
+  char case3 = head_to_body('S');
+  char case4 = head_to_body('D');
+  char case5 = head_to_body('x');
+  char case6 = head_to_body('w');
+  char case7 = head_to_body('^');
+  char case8 = head_to_body('j');
+  if (!assert_equals_char("case1", '^', case1)) return false;
+  if (!assert_equals_char("case2", '<', case2)) return false;
+  if (!assert_equals_char("case3", 'v', case3)) return false;
+  if (!assert_equals_char("case4", '>', case4)) return false;
+  if (!assert_equals_char("case5", 'x', case5)) return false;
+  if (!assert_equals_char("case6", 'w', case6)) return false;
+  if (!assert_equals_char("case7", '^', case7)) return false;
+  if (!assert_equals_char("case8", 'j', case8)) return false;
   return true;
 }
 
