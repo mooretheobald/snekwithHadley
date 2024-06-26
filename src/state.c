@@ -277,8 +277,11 @@ static unsigned int get_next_col(unsigned int cur_col, char c) {
   This function should not modify anything.
 */
 static char next_square(game_state_t *state, unsigned int snum) {
-  // TODO: Implement this function.
-  return '?';
+  snake_t temp = *state.(snakes + snum(sizeof temp));
+  unsigned int temprow = temp.head_row;
+  unsigned int tempcol = temp.head_col;
+  char tempchar = get_board_at(state, temprow, tempcol);
+  return get_board_at(state, get_next_row(temprow, tempchar), get_next_col(tempcol, tempchar));
 }
 
 /*
