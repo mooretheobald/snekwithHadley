@@ -117,7 +117,22 @@ bool test_is_tail() {
 }
 
 bool test_is_head() {
-  // TODO: Implement this function.
+    bool case1 = is_head('a');
+  bool case2 = is_head('s');
+  bool case3 = is_head('d');
+  bool case4 = is_head('w');
+  bool case5 = is_head('A');
+  bool case6 = is_head('>');
+  bool case7 = is_head('x');
+  bool case8 = is_head('h');
+  if (!assert_true("case1", case1)) return false;
+  if (!assert_true("case2", case2)) return false;
+  if (!assert_true("case3", case3)) return false;
+  if (!assert_true("case4", case4)) return false;
+  if (!assert_false("case5", case5)) return false;
+  if (!assert_false("case6", case6)) return false;
+  if (!assert_false("case7", case7)) return false;
+  if (!assert_false("case8", case8)) return false;
   return true;
 }
 
@@ -198,14 +213,46 @@ bool test_head_to_body() {
 }
 
 bool test_get_next_row() {
-  // TODO: Implement this function.
+  bool case1 = get_next_row('v');
+  bool case2 = get_next_row('s');
+  bool case3 = get_next_row('S');
+  bool case4 = get_next_row('^');
+  bool case5 = get_next_row('A');
+  bool case6 = get_next_row('W');
+  bool case7 = get_next_row('x');
+  bool case8 = get_next_row('h');
+  if (!assert_true("case1", case1)) return false;
+  if (!assert_true("case2", case2)) return false;
+  if (!assert_true("case3", case3)) return false;
+  if (!assert_true("case4", case4)) return false;
+  if (!assert_false("case5", case5)) return false;
+  if (!assert_false("case6", case6)) return false;
+  if (!assert_false("case7", case7)) return false;
+  if (!assert_false("case8", case8)) return false;
+  return true; }
+
+
+
+bool test_get_next_col() {
+  bool case1 = get_next_col('>');
+  bool case2 = get_next_col('D');
+  bool case3 = get_next_col(2);
+  bool case4 = get_next_col('<');
+  bool case5 = get_next_col('a');
+  bool case6 = get_next_col('w');
+  bool case7 = get_next_col('x');
+  bool case8 = get_next_col('h');
+  if (!assert_true("case1", case1)) return false;
+  if (!assert_true("case2", case2)) return false;
+  if (!assert_true("case3", case3)) return false;
+  if (!assert_true("case4", case4)) return false;
+  if (!assert_false("case5", case5)) return false;
+  if (!assert_false("case6", case6)) return false;
+  if (!assert_false("case7", case7)) return false;
+  if (!assert_false("case8", case8)) return false;
   return true;
 }
 
-bool test_get_next_col() {
-  // TODO: Implement this function.
-  return true;
-}
 
 bool test_customs() {
   if (!test_greater_than_forty_two()) {
