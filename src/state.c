@@ -179,8 +179,7 @@ static void set_board_at(game_state_t *state, unsigned int row, unsigned int col
 static bool is_tail(char c) {
   if ((c == 'w') | (c == 'a') | (c == 's') | (c == 'd')) return true;
   else return false;
- 
-
+ }
 /*
   Returns true if c is part of the snake's head.
   The snake consists of these characters: "WASDx"
@@ -188,7 +187,7 @@ static bool is_tail(char c) {
 */
 static bool is_head(char c) {
     if ((c == 'W') | (c == 'A') | (c == 'S') | (c == 'D') | (c == 'x')) return true;
-  else return false;
+    return false;
 }
 
 /*
@@ -197,7 +196,7 @@ static bool is_head(char c) {
 */
 static bool is_snake(char c) {
     if (is_tail(c) | is_head(c) | (c == '^') | (c == '<') | (c == 'v') | (c == '>')) return true;
-  else return false;
+    return false;
 }
 
 /*
@@ -207,14 +206,15 @@ static bool is_snake(char c) {
 */
 static char body_to_tail(char c) {
   switch (c) {
-      case (^):
+      case ('^'):
           return 'w';
-      case (<):
+      case ('<'):
           return 'a';
-      case (v):
+      case ('v'):
           return 's';
-      case (>):
+      case ('>'):
           return 'd';   
+      default: return c;
   }
 }
 
@@ -225,16 +225,16 @@ static char body_to_tail(char c) {
 */
 static char head_to_body(char c) {
   switch (c) {
-      case (W):
+      case ('W'):
           return '^';
-      case (A):
+      case ('A'):
           return '<';
-      case (S):
+      case ('S'):
           return 'v';
-      case (D):
-          return '>';   
+      case ('D'):
+          return '>';
+      default: return c;
   }
-}
 }
 
 /*
@@ -244,9 +244,9 @@ static char head_to_body(char c) {
 */
 static unsigned int get_next_row(unsigned int cur_row, char c) {
   switch (c) {
-      case (v | s | S):
+      case ('v' | 's' | 'S'):
           return cur_row + 1;
-      case (^ | w | W):
+      case ('^' | 'w' | 'W'):
           return cur_row - 1;
       default:
           return cur_row;
@@ -260,9 +260,9 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
 */
 static unsigned int get_next_col(unsigned int cur_col, char c) {
   switch (c) {
-      case (> | d | D):
+      case ('>' | 'd' | 'D'):
           return cur_col + 1;
-      case (< | a | A):
+      case ('<' | 'a' | 'A'):
           return cur_col - 1;
       default:
           return cur_col;
