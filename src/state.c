@@ -245,9 +245,17 @@ static char head_to_body(char c) {
 static unsigned int get_next_row(unsigned int cur_row, char c) {
 
     switch (c) {
-        case ('v' | 's' | 'S'):
+        case 'v':
             return cur_row + 1;
-        case ('^' | 'w' | 'W'):
+        case 's':
+            return cur_row + 1;
+        case 'S':
+            return (cur_row + 1);
+        case '^':
+            return cur_row - 1;
+        case 'w':
+            return cur_row - 1;
+        case 'W':
             return cur_row - 1;
         default:
             return cur_row;
@@ -261,9 +269,9 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
 */
 static unsigned int get_next_col(unsigned int cur_col, char c) {
   switch (c) {
-      case ('>' | 'd' | 'D'):
+      case '>' | 'd' | 'D':
           return cur_col + 1;
-      case ('<' | 'a' | 'A'):
+      case '<' | 'a' | 'A':
           return cur_col - 1;
       default:
           return cur_col;
