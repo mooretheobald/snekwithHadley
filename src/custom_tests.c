@@ -213,43 +213,43 @@ bool test_head_to_body() {
 }
 
 bool test_get_next_row() {
-  bool case1 = get_next_row(1, 'v');
-  bool case2 = get_next_row(1, 's');
-  bool case3 = get_next_row(1, 'S');
-  bool case4 = get_next_row(1, '^');
-  bool case5 = get_next_row(1, 'A');
-  bool case6 = get_next_row(1, 'W');
-  bool case7 = get_next_row(1, 'x');
-  bool case8 = get_next_row(1, 'h');
-  if (!assert_equals_int("case1", 2, case1)) return false;
-  if (!assert_equals_int("case2", 2, case2)) return false;
-  if (!assert_equals_int("case3", 2, case3)) return false;
-  if (!assert_equals_int("case4", 0, case4)) return false;
-  if (!assert_equals_int("case5", 1, case5)) return false;
-  if (!assert_equals_int("case6", 0, case6)) return false;
-  if (!assert_equals_int("case7", 1, case7)) return false;
-  if (!assert_equals_int("case8", 1, case8)) return false;
+  unsigned int case1 = get_next_row(1, 'v');
+  unsigned int case2 = get_next_row(1, 's');
+  unsigned int case3 = get_next_row(1, 'S');
+  unsigned int case4 = get_next_row(1, '^');
+  unsigned int case5 = get_next_row(1, 'A');
+  unsigned int case6 = get_next_row(1, 'W');
+  unsigned int case7 = get_next_row(1, 'x');
+  unsigned int case8 = get_next_row(1, 'h');
+  if (!assert_equals_unsigned_int("case1", 2, case1)) return false;
+  if (!assert_equals_unsigned_int("case2", 2, case2)) return false;
+  if (!assert_equals_unsigned_int("case3", 2, case3)) return false;
+  if (!assert_equals_unsigned_int("case4", 0, case4)) return false;
+  if (!assert_equals_unsigned_int("case5", 1, case5)) return false;
+  if (!assert_equals_unsigned_int("case6", 0, case6)) return false;
+  if (!assert_equals_unsigned_int("case7", 1, case7)) return false;
+  if (!assert_equals_unsigned_int("case8", 1, case8)) return false;
   return true; }
 
 
 
 bool test_get_next_col() {
-  bool case1 = get_next_col(1, '>');
-  bool case2 = get_next_col(1, 's');
-  bool case3 = get_next_col(1, 'D');
-  bool case4 = get_next_col(1, '^');
-  bool case5 = get_next_col(1, 'A');
-  bool case6 = get_next_col(1, '<');
-  bool case7 = get_next_col(1, 'x');
-  bool case8 = get_next_col(1, 'h');
-  if (!assert_equals_int("case1", 2, case1)) return false;
-  if (!assert_equals_int("case2", 1, case2)) return false;
-  if (!assert_equals_int("case3", 2, case3)) return false;
-  if (!assert_equals_int("case4", 1, case4)) return false;
-  if (!assert_equals_int("case5", 0, case5)) return false;
-  if (!assert_equals_int("case6", 0, case6)) return false;
-  if (!assert_equals_int("case7", 1, case7)) return false;
-  if (!assert_equals_int("case8", 1, case8)) return false;
+  unsigned int case1 = get_next_col(1, '>');
+  unsigned int case2 = get_next_col(1, 's');
+  unsigned int case3 = get_next_col(1, 'D');
+  unsigned int case4 = get_next_col(1, '^');
+  unsigned int case5 = get_next_col(1, 'A');
+  unsigned int case6 = get_next_col(1, '<');
+  unsigned int case7 = get_next_col(1, 'x');
+  unsigned int case8 = get_next_col(1, 'h');
+  if (!assert_equals_unsigned_int("case1", 2, case1)) return false;
+  if (!assert_equals_unsigned_int("case2", 1, case2)) return false;
+  if (!assert_equals_unsigned_int("case3", 2, case3)) return false;
+  if (!assert_equals_unsigned_int("case4", 1, case4)) return false;
+  if (!assert_equals_unsigned_int("case5", 0, case5)) return false;
+  if (!assert_equals_unsigned_int("case6", 0, case6)) return false;
+  if (!assert_equals_unsigned_int("case7", 1, case7)) return false;
+  if (!assert_equals_unsigned_int("case8", 1, case8)) return false;
   return true; }
 
 

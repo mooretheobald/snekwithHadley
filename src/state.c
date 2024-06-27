@@ -248,7 +248,7 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
         case ('v' | 's' | 'S'):
             return cur_row + 1;
         case ('^' | 'w' | 'W'):
-            return cur_row + 1;
+            return cur_row - 1;
         default:
             return cur_row;
     }
