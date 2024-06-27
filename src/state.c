@@ -58,7 +58,7 @@ game_state_t *create_default_state() {
       "#                  #",
       "#                  #",
       "#                  #",
-      "#                  #",
+     "#                  #",
       "#                  #",
       "#                  #",
       "#                  #",
@@ -243,14 +243,15 @@ static char head_to_body(char c) {
   Returns cur_row otherwise.
 */
 static unsigned int get_next_row(unsigned int cur_row, char c) {
-  switch (c) {
-      case ('v' | 's' | 'S'):
-          return cur_row + 1;
-      case ('^' | 'w' | 'W'):
-          return cur_row - 1;
-      default:
-          return cur_row;
-  }
+
+    switch (c) {
+        case ('v' | 's' | 'S'):
+            return cur_row + 1;
+        case ('^' | 'w' | 'W'):
+            return cur_row + 1;
+        default:
+            return cur_row;
+    }
 }
 
 /*
