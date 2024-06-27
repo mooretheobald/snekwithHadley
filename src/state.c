@@ -361,7 +361,23 @@ static void update_tail(game_state_t *state, unsigned int snum) {
 
 /* Task 4.5 */
 void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
-  // TODO: Implement this function.
+  //for all the snakes in state:
+  for (int i = 0; i < state.num_snakes; i++) {
+      snake_t curr_s = state.snakes[i];
+      char new_spot = next_square(state, snake);
+      if (is_snake(new_spot) | (new_spot == "#")) {
+          //DIE and not move; head becomes x
+          curr_s.head = 'x';
+          //update head on board
+      }
+      else if (new_spot == "*") {
+          //eat fruit and grow by one; update head but NOT tail, call the add_food function
+          update_head
+
+      }
+  }
+  char new_spot = next_square(state, snake);
+  
   return;
 }
 
