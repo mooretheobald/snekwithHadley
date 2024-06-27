@@ -377,7 +377,41 @@ static void update_tail(game_state_t *state, unsigned int snum) {
 
 /* Task 4.5 */
 void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
-  //for all the snakes in state:
+     // Iterate over each snake
+    for (unsigned int snum = 0; snum < state->num_snakes; snum++) {
+        if (state->snakes[snum].live) {
+            // Determine next position
+           // unsigned int next_row = get_next_row(state->snakes[snum].head_row, state->snakes[snum].head_direction);
+            //unsigned int next_col = get_next_col(state->snakes[snum].head_col, state->snakes[snum].head_direction);
+            
+            // Get the character in the next square
+            char next_char = next_square(state, snum);
+            
+            // Check for collisions with walls or other snakes
+            if (next_char == '#' || is_snake(next_char)) {
+                // Snake dies
+                state->snakes[snum].live = false;
+                // Place an 'x' at the head's current position
+                set_board_at(state, state->snakes[snum].head_row, state->snakes[snum].head_col, 'x');
+            } else if (next_char== '*') { // Next char is fruit
+                // Snake eats fruit
+                add_food(state); // Add new fruit
+                //state->snakes[snum].length++; // Increment length of the snake
+                update_head(state, snum); // Move head to the next position
+                                          // //TAIL NOT MOVED
+            } else {
+                // Move the snake
+                update_head(state, snum); // Move head to the next position
+                update_tail(state, snum); // Move tail to maintain length
+            }
+        }
+    }
+}
+
+
+
+    /* 
+     * //for all the snakes in state:
   for (int i = 0; i < state.num_snakes; i++) {
       snake_t curr_s = state.snakes[i];
       char new_spot = next_square(state, snake);
@@ -396,17 +430,36 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
   
   return;
 }
+*/
 
 /* Task 5.1 */
 char *read_line(FILE *fp) {
-  // TODO: Implement this function.
-  return NULL;
+    char* ourval = fgets(fp);
+    if (!ourval) return NULL;
+    char* retval = malloc(strlen(ourval) * sizeof(char));
+    strcpy(retval, ourval);
+    return retval;
 }
 
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
-  // TODO: Implement this function.
-  return NULL;
+    game_state_t* loaded = malloc(sizeof(loaded));
+    loaded->num_rows = 0;
+    char** temp_board;
+    char** temp_board_init = temp_board;
+    char* vals = read_line(fp);
+    while (vals) {
+        *temp_board = vals
+        vals = read_line(fp);
+        temp_board += val*sizeof(char);
+        loaded->numrows++;
+    }
+    loaded->board = malloc(loaded->num_rows);
+    for (int i = 0; i < loaded->num_rows; i++) {
+        loaded->board[i] = 
+    }
+    // TODO: Implement this function.
+    return NULL;
 }
 
 /*
