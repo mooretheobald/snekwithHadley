@@ -243,13 +243,21 @@ static char head_to_body(char c) {
   Returns cur_row otherwise.
 */
 static unsigned int get_next_row(unsigned int cur_row, char c) {
-
     switch (c) {
-        case ('v' | 's' | 'S'):
+        case 'v':
             return cur_row + 1;
-        case ('^' | 'w' | 'W'):
+        case 's':
+            return cur_row + 1;
+        case 'S':
+            return cur_row + 1;
+        case '^':
+            return cur_row - 1;
+        case 'w':
+            return cur_row - 1;
+        case 'W':
             return cur_row - 1;
         default:
+            printf("default");
             return cur_row;
     }
 }
@@ -261,9 +269,17 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
 */
 static unsigned int get_next_col(unsigned int cur_col, char c) {
   switch (c) {
-      case ('>' | 'd' | 'D'):
+      case '>':
           return cur_col + 1;
-      case ('<' | 'a' | 'A'):
+      case 'd':
+          return cur_col + 1;
+      case 'D':
+          return cur_col + 1;
+      case '<':
+          return cur_col - 1;
+      case 'a':
+          return cur_col - 1;
+      case 'A':
           return cur_col - 1;
       default:
           return cur_col;
@@ -315,8 +331,8 @@ static char next_square(game_state_t *state, unsigned int snum) {
 */
 static void update_head(game_state_t *state, unsigned int snum) {
 
-    snake_t curr_s = state->snakes[snum];
-    char prev_char = get_board_at(state, curr_s.head_row, curr_s.head_col);
+  snake_t curr_s = state->snakes[snum];
+  char prev_char = get_board_at(state, curr_s.head_row, curr_s.head_col);
   // update head on game board; add a character where the snake is moving and replace prev_head with an arrow "^v<>" ONLY TEXT, no attributes
   set_board_at(state, curr_s.head_row, curr_s.head_col, head_to_body(prev_char));
   unsigned int new_row = get_next_row(curr_s.head_row, prev_char);
@@ -324,8 +340,8 @@ static void update_head(game_state_t *state, unsigned int snum) {
   set_board_at(state, new_row, new_col, prev_char);
   //state[curr_s.head_row][curr_s.head_col] = ; //turnednto PREVIOUS char
   // update head in the snake_t struct, w head_row and head_col ONLY ATTRIBUTES, no text
-  curr_s.head_row = new_row;
-  curr_s.head_col = new_col;
+  state->snakes[snum].head_row = new_row;
+  state->snakes[snum].head_col = new_col;
   
   return;
 }
@@ -343,18 +359,18 @@ static void update_head(game_state_t *state, unsigned int snum) {
 
   // replace next body segment with new tail spot
 static void update_tail(game_state_t *state, unsigned int snum) {
-   snake_t curr_s = state->snakes[snum];
+  snake_t curr_s = state->snakes[snum];
   char prev_char = get_board_at(state, curr_s.tail_row, curr_s.tail_col);
   // reset old tail to space
   // state[curr_s.head_row][curr_s.head_col] = head_to_body(prev_char);
   unsigned int new_row = get_next_row(curr_s.tail_row, prev_char);
   unsigned int new_col = get_next_col(curr_s.tail_col, prev_char);
-  set_board_at(state, new_row, new_col, prev_char);
+  set_board_at(state, new_row, new_col, body_to_tail(get_board_at(state, new_row, new_col)));
   set_board_at(state, curr_s.tail_row, curr_s.tail_col, ' ');
   //state[curr_s.head_row][curr_s.head_col] = ; //turnednto PREVIOUS char
   // update tail in snake structure
-  curr_s.tail_row = new_row;
-  curr_s.tail_col = new_col;
+  state->snakes[snum].tail_row = new_row;
+  state->snakes[snum].tail_col = new_col;
   
   return;
 }
