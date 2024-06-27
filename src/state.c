@@ -277,11 +277,28 @@ static unsigned int get_next_col(unsigned int cur_col, char c) {
   This function should not modify anything.
 */
 static char next_square(game_state_t *state, unsigned int snum) {
+  
+
+
+  // original
+  //
+  /*
   snake_t temp = state->snakes[snum];
   unsigned int temprow = temp.head_row;
   unsigned int tempcol = temp.head_col;
   char tempchar = get_board_at(state, temprow, tempcol);
   return get_board_at(state, get_next_row(temprow, tempchar), get_next_col(tempcol, tempchar));
+
+    */
+  //other
+  snake_t curr_s = state->snakes[snum];
+  char s = get_board_at(state, curr_s.head_row,curr_s.head_col);
+  //get next stuff from head
+  int next_row = get_next_row(curr_s.head_row,s);
+  int next_col = get_next_col(curr_s.head_col,s);
+  //return board at this new spot
+  return get_board_at(state, next_row, next_col)
+
 }
 
 /*
@@ -296,7 +313,14 @@ static char next_square(game_state_t *state, unsigned int snum) {
   Note that this function ignores food, walls, and snake bodies when moving the head.
 */
 static void update_head(game_state_t *state, unsigned int snum) {
-  // TODO: Implement this function.
+
+    snake_t curr_s = state->snakes[snum];
+    char prev_char = get_board_at(state, curr_s.head_row, curr_s.head_col);
+  // update head on game board; add a character where the snake is moving and replace prev_head with an arrow "^v<>" ONLY TEXT, no attributes
+  state[curr_s.head_row][curr_s.head_col] = head_to_body(prev_char);
+  set_board
+  state[curr_s.head_row][curr_s.head_col] = ; //turnednto PREVIOUS char
+  // update head in the snake_t struct, w head_row and head_col ONLY ATTRIBUTES, no text
   return;
 }
 
