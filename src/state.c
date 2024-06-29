@@ -434,31 +434,59 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 
 /* Task 5.1 */
 char *read_line(FILE *fp) {
-    char* retval;
+    char* retval = malloc(500 * sizeof(char));
+    retval = fgets(retval, 500, fp);
     if (!retval) return NULL;
-    return fgets(retval, 150, fp);
+    char* temp = malloc(sizeof(char*));
+    if (!temp) return NULL;
+    strcpy(temp, retval);
+    free(retval);
+    return temp;
 }
 
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
     game_state_t* loaded = malloc(sizeof(loaded));
     loaded->num_rows = 0;
-    char** temp_board;
-    char** temp_board_init = temp_board;
-    char* vals = read_line(fp);
-    while (vals) {
-        *temp_board = vals;
-        vals = read_line(fp);
-        temp_board += val*sizeof(char);
-        loaded->numrows++;
+    char** temp;
+    temp = malloc(sizeof(char*) * 100);
+    //loaded->board = malloc(sizeof(char*) * 100);
+    temp[0] = read_line(fp);
+    int cols = strlen(temp[0]);
+    temp[0] + ((cols - 1) * sizeof(char)) = '\0';
+    //loaded->board[0] = read_line(fp);
+    while (temp[loaded->num_rows]) {
+        loaded->num_rows++;
+        temp[loaded->num_rows] = read_line(fp);
+        temp[loaded->num_rows] + ((cols - 1) * sizeof(char)) = '\0';
+        //loaded->board = realloc(loaded->board, (loaded->num_rows + 1) * sizeof(char*));
     }
-    loaded->board = malloc(loaded->num_rows);
-    for (int i = 0; i < loaded->num_rows; i++) {
-        loaded->board[i] = 
-    }
-    // TODO: Implement this function.
+    loaded->board = realloc(temp, loaded->num_rows * sizeof(char*));
     return loaded;
 }
+
+/*
+    game_state_t* loaded = malloc(sizeof(loaded));
+    loaded->num_rows = 0;
+    char* temp_board = malloc(500 * sizeof(char));
+    char* elempointer = temp_board;
+    char* next_line = read_line(fp);
+    //size_t cols = strlen(next_line);
+    while (next_line) {
+        loaded->num_rows++;
+        strcpy(elempointer, next_line);
+        next_line = read_line(fp);
+        if (!next_line) break;
+        elempointer += strlen(next_line) * sizeof(char);
+    }
+    loaded->board = malloc(loaded->num_rows * sizeof(char*));
+    for (int i = 0; i < loaded->num_rows; i++) {
+        strcpy(*loaded->board[i], (char**) temp_board[i]);
+        // loaded->board[i] = (char*) temp_board[i];
+    }
+    free(temp_board);
+    return loaded;
+    */
 
 /*
   Task 6.1
