@@ -434,11 +434,9 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 
 /* Task 5.1 */
 char *read_line(FILE *fp) {
-    char* ourval = fgets(fp);
-    if (!ourval) return NULL;
-    char* retval = malloc(strlen(ourval) * sizeof(char));
-    strcpy(retval, ourval);
-    return retval;
+    char* retval;
+    if (!retval) return NULL;
+    return fgets(retval, 150, fp);
 }
 
 /* Task 5.2 */
@@ -449,7 +447,7 @@ game_state_t *load_board(FILE *fp) {
     char** temp_board_init = temp_board;
     char* vals = read_line(fp);
     while (vals) {
-        *temp_board = vals
+        *temp_board = vals;
         vals = read_line(fp);
         temp_board += val*sizeof(char);
         loaded->numrows++;
@@ -459,7 +457,7 @@ game_state_t *load_board(FILE *fp) {
         loaded->board[i] = 
     }
     // TODO: Implement this function.
-    return NULL;
+    return loaded;
 }
 
 /*
