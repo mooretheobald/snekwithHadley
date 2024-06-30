@@ -436,7 +436,7 @@ char *read_line(FILE *fp) {
     if (!t1) return NULL;
     fgets(t1, 500, fp);
     size_t cols = strlen(t1);
-    char* t2 = realloc(t1, (cols + 1) * sizeof(char));
+    char* t2 = realloc(t1, (cols + 1) * sizeof(char) + 1);
     return t2;
 
     /*
@@ -453,7 +453,7 @@ char *read_line(FILE *fp) {
 
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
-    /*
+
     game_state_t* loaded = malloc(sizeof(loaded));
     if (!loaded) return NULL;
     loaded->num_rows = 0;
@@ -461,62 +461,23 @@ game_state_t *load_board(FILE *fp) {
     while (1) {
         if (feof(fp)) break;
         loaded->num_rows++;
-        temp[loaded->num_rows - 1] =i malloc(sizeof(char*));
+        temp[loaded->num_rows - 1] = malloc(sizeof(char*));
         if (!temp[loaded->num_rows - 1]) return NULL;
         temp[loaded->num_rows - 1] = read_line(fp);
     }
+    size_t cols = strlen(temp[0]);
+    free(temp[loaded->num_rows - 1]);
+    loaded->num_rows--;
     loaded->board = malloc(loaded->num_rows * sizeof(char*));
     if (!loaded->board) return NULL;
-
     for (int i = 0; i < loaded->num_rows; i++) {
-        loaded->board[i] = malloc(sizeof(char*));
+        loaded->board[i] = malloc((cols + 1) * sizeof(char));
         if (!loaded->board[i]) return NULL;
         strcpy(loaded->board[i], temp[i]);
         free(temp[i]);
     }
     free(temp);
     return loaded;
-    */
-
-
-    
-    game_state_t* loaded = malloc(sizeof(loaded));
-    if (!loaded) return NULL;
-    loaded->num_rows = 0;
-    char* next_line = read_line(fp);
-    char** temp = malloc(1000 * sizeof(char*));
-    if (!temp) return NULL;
-    while (next_line) {
-        temp[loaded->num_rows] = realloc(next_line, sizeof(char*));
-        loaded->num_rows++;
-        next_line = read_line(fp);
-    }
-    loaded->board = malloc(loaded->num_rows * sizeof(char*));
-    if (!loaded->board) return NULL;
-    for (int i = 0; i < loaded->num_rows; i++) {
-        strcpy(loaded->board[i], temp[i]);
-    }
-    free(temp);
-    return loaded;
-    
-
-    /*
-    game_state_t* loaded = malloc(sizeof(loaded));
-    if (!loaded) return NULL;
-    loaded->num_rows = 0;
-    loaded->board = malloc(sizeof(char*));
-    loaded->board = malloc(sizeof(char*) * 100);
-    temp[0] = read_line(fp);
-    //loaded->board[0] = read_line(fp);
-    while (temp[loaded->num_rows]) {
-        loaded->num_rows++;
-        temp[loaded->num_rows] = read_line(fp);
-        //loaded->board = realloc(loaded->board, (loaded->num_rows + 1) * sizeof(char*));
-    }
-    loaded->board = realloc(temp, loaded->num_rows * sizeof(char*));
-    if (!loaded->board) return NULL;
-    return loaded;
-    */
 
 }
 
