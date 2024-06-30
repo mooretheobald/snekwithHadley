@@ -106,7 +106,7 @@ game_state_t *create_default_state() {
           else *(bard[i] + j) = ' ';
       }
       *(bard[i] + j) = '\0';
-  }
+      {
   // Make og snake
   // Tail
   *(bard[2] + 2) = 'd';
@@ -432,18 +432,19 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 }
 */
 
-/* Task 5.1 */
+/* Task 5.1 */ 
 char *read_line(FILE *fp) {
-    char* ourval = fgets(fp);
+    /*char* ourval = fgets(fp);
     if (!ourval) return NULL;
     char* retval = malloc(strlen(ourval) * sizeof(char));
     strcpy(retval, ourval);
-    return retval;
+    return retval; */
+    return NULL;
 }
 
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
-    game_state_t* loaded = malloc(sizeof(loaded));
+    /*game_state_t* loaded = malloc(sizeof(loaded));
     loaded->num_rows = 0;
     char** temp_board;
     char** temp_board_init = temp_board;
@@ -456,11 +457,13 @@ game_state_t *load_board(FILE *fp) {
     }
     loaded->board = malloc(loaded->num_rows);
     for (int i = 0; i < loaded->num_rows; i++) {
-        loaded->board[i] = 
+        //loaded->board[i] = 
     }
     // TODO: Implement this function.
+    */
     return NULL;
 }
+
 
 /*
   Task 6.1
@@ -471,12 +474,54 @@ game_state_t *load_board(FILE *fp) {
   fill in the head row and col in the struct.
 */
 static void find_head(game_state_t *state, unsigned int snum) {
-  // TODO: Implement this function.
-  return;
+    snake_t curr_s = state->snakes[snum];
+    unsigned int curr_row = curr_s.tail_row;
+    unsigned int curr_col = curr_s.tail_col;
+
+    char curr_char = state->board[curr_row][curr_col];
+
+    while (!is_head(curr_char)) {
+        curr_row = get_next_row(curr_row, curr_char);
+        curr_col = get_next_col(curr_col, curr_char);
+        curr_char = state->board[curr_row][curr_col];
+    }
+    curr_s.head_row = curr_row;
+    curr_s.head_col = curr_col;
+    return;
 }
 
 /* Task 6.2 */
 game_state_t *initialize_snakes(game_state_t *state) {
-  // TODO: Implement this function.
-  return NULL;
+    unsigned int numsnakes = 0;
+    snake_t temp_snakes[100];
+    //iterate through the whole board
+    for (unsigned int row = 0; row < state->num_rows; row++) {
+        for (unsigned int col = 0; col < strlen(state->board[row]); col ++) {
+            char next_char = get_board_at(state, row, col);
+            if (is_tail(next_char)) {
+                //if there is a tail, fill in temp w the snake info
+                //snake_t curr_s = temp_snakes[numsnakes];
+                temp_snakes[numsnakes].live = true;
+                temp_snakes[numsnakes].tail_row = row;
+                temp_snakes[numsnakes].tail_col = col;
+                numsnakes++;
+            }
+        }
+    }
+
+    //set up ret board snakes array
+
+    state->num_snakes = numsnakes;
+    state->snakes = malloc(state->num_snakes * sizeof(snake_t));
+
+    //fill in the state from the temp snakes array
+
+   for (unsigned int s = 0; s < state->num_snakes; s++) {
+    state->snakes[s] = temp_snakes[s];
+    //calling find head finds and sets the head
+    find_head(state, s);
+  }
+  return state;
 }
+
+
