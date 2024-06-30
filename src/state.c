@@ -43,30 +43,30 @@ game_state_t *create_default_state() {
                              //HARDCODE THE BOARD //board = malloc(sizeof(inner thing));
   //Allocate memory for each row:
   for (int i = 0; i < default_board->num_rows; i++) {
-    default_board->board[i] = malloc(21 * sizeof(char)); //20 columns + 1 for null terminator!
+    default_board->board[i] = malloc(22 * sizeof(char)); //20 columns + 1 for new line + 1 for null terminator!
   }
   //Hardcoded layout:
   const char* initial_board[] = {
       //EACH ROW
       //
-      "####################",
-      "#                  #",
-      "# d>D    *         #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-     "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "#                  #",
-      "####################"
+      "####################\n",
+      "#                  #\n",
+      "# d>D    *         #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "#                  #\n",
+      "####################\n"
   };
 
 
@@ -140,7 +140,7 @@ void free_state(game_state_t *state) {
 void print_board(game_state_t *state, FILE *fp) {
   
   for (int i = 0; i < state-> num_rows; i++) {
-      fprintf(fp, "%s\n", state->board[i]);
+      fprintf(fp, "%s", state->board[i]);
   }
   return;
 }
@@ -434,35 +434,27 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 
 /* Task 5.1 */ 
 char *read_line(FILE *fp) {
-    /*char* ourval = fgets(fp);
-    if (!ourval) return NULL;
-    char* retval = malloc(strlen(ourval) * sizeof(char));
-    strcpy(retval, ourval);
-    return retval; */
-    return NULL;
+<<<<<<< HEAD
+    char* retval = malloc(500 * sizeof(char));
+    retval = fgets(retval, 500, fp);
+    if (!retval) return NULL;
+    char* temp = malloc(sizeof(char*));
+    if (!temp) return NULL;
+    strcpy(temp, retval);
+    free(retval);
+    return temp;
+>>>>>>> 92346fb2580dada3e48ce6d16e383178a3aaf1eb
 }
 
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
-    /*game_state_t* loaded = malloc(sizeof(loaded));
-    loaded->num_rows = 0;
-    char** temp_board;
-    char** temp_board_init = temp_board;
-    char* vals = read_line(fp);
-    while (vals) {
-        *temp_board = vals
-        vals = read_line(fp);
-        temp_board += val*sizeof(char);
-        loaded->numrows++;
+         strcpy(*loaded->board[i], (char**) temp_board[i]);
+        // loaded->board[i] = (char*) temp_board[i];
     }
-    loaded->board = malloc(loaded->num_rows);
-    for (int i = 0; i < loaded->num_rows; i++) {
-        //loaded->board[i] = 
-    }
-    // TODO: Implement this function.
-    */
-    return NULL;
-}
+    free(temp_board);
+    return loaded;
+    
+>>>>>>> 92346fb2580dada3e48ce6d16e383178a3aaf1eb
 
 
 /*
