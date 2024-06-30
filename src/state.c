@@ -448,9 +448,11 @@ char *read_line(FILE *fp) {
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
     game_state_t* loaded = malloc(sizeof(loaded));
+    if (!loaded) return NULL;
     loaded->num_rows = 0;
     char** temp;
     temp = malloc(sizeof(char*) * 100);
+    if (!temp) return NULL;
     //loaded->board = malloc(sizeof(char*) * 100);
     temp[0] = read_line(fp);
     //loaded->board[0] = read_line(fp);
@@ -460,6 +462,7 @@ game_state_t *load_board(FILE *fp) {
         //loaded->board = realloc(loaded->board, (loaded->num_rows + 1) * sizeof(char*));
     }
     loaded->board = realloc(temp, loaded->num_rows * sizeof(char*));
+    if (!loaded->board) return NULL;
     return loaded;
 
 
