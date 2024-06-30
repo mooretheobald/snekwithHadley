@@ -257,7 +257,6 @@ static unsigned int get_next_row(unsigned int cur_row, char c) {
         case 'W':
             return cur_row - 1;
         default:
-            printf("default");
             return cur_row;
     }
 }
@@ -435,14 +434,23 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 
 /* Task 5.1 */
 char *read_line(FILE *fp) {
-    char* retval = malloc(500 * sizeof(char));
-    retval = fgets(retval, 500, fp);
+    char* t1 = malloc(500);
+    if (!t1) return NULL;
+    fgets(t1, 500, fp);
+    size_t cols = strlen(t1);
+    char* t2 = realloc(t1, (cols + 1) * sizeof(char));
+    return t2;
+
+    /*
+    char* retval = malloc(sizeof(char*));
     if (!retval) return NULL;
+    retval = fgets(retval, 500, fp);
     char* temp = malloc(sizeof(char*));
     if (!temp) return NULL;
     strcpy(temp, retval);
     free(retval);
     return temp;
+    */
 }
 
 /* Task 5.2 */
@@ -450,8 +458,8 @@ game_state_t *load_board(FILE *fp) {
     game_state_t* loaded = malloc(sizeof(loaded));
     if (!loaded) return NULL;
     loaded->num_rows = 0;
-    char** temp;
-    temp = malloc(sizeof(char*) * 100);
+    char** temp = malloc(500);
+    //loaded->board = malloc(sizeof(char*));
     if (!temp) return NULL;
     //loaded->board = malloc(sizeof(char*) * 100);
     temp[0] = read_line(fp);
