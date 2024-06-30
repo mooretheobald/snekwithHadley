@@ -465,7 +465,7 @@ game_state_t *load_board(FILE *fp) {
     if (!loaded->board) return NULL;
     return loaded;
 
-
+}
 
 
 
