@@ -49,15 +49,15 @@ int main(int argc, char *argv[]) {
     state = load_board(file);
     // If the file doesn't exist, return -1
     // Then call initialize_snakes on the state you made
-    state = initialize_snakes(state)
+    state = initialize_snakes(state);
   } else if (io_stdin) {
     // Load the board from stdin
     state = load_board(stdin);
     // Then call initialize_snakes on the state you made
-    state = initialize_snakes(snake);
+    state = initialize_snakes(state);
   } else {
     // Create default state
-    state = create_default_state()
+    state = create_default_state();
   }
 
   // Update state. Use the deterministic_food function
