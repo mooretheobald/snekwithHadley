@@ -407,31 +407,23 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 
 
 
-    /* 
-     * //for all the snakes in state:
-  for (int i = 0; i < state.num_snakes; i++) {
-      snake_t curr_s = state.snakes[i];
-      char new_spot = next_square(state, snake);
-      if (is_snake(new_spot) | (new_spot == "#")) {
-          //DIE and not move; head becomes x
-          curr_s.head = 'x';
-          //update head on board
-      }
-      else if (new_spot == "*") {
-          //eat fruit and grow by one; update head but NOT tail, call the add_food function
-          update_head
-
-      }
-  }
-  char new_spot = next_square(state, snake);
-  
-  return;
-}
-*/
 
 
 /* Task 5.1 */
 char *read_line(FILE *fp) {
+    //make temp
+    char temp[100000];
+    char *ptr = fgets(temp, sizeof(temp),fp);
+    if (!ptr) return NULL;
+    long unsigned int length = strlen(temp);
+    char* retval = malloc((length + 1) * sizeof(char));
+    if (!retval) return NULL;
+    strcpy(retval, temp);
+    return retval;
+
+
+
+    /* ORIGINAL
     char* t1 = malloc(500);
     if (!t1) return NULL;
     fgets(t1, 500, fp);
@@ -439,7 +431,7 @@ char *read_line(FILE *fp) {
     char* t2 = realloc(t1, (cols + 1) * sizeof(char) + 1);
     return t2;
 
-    /*
+    
     char* retval = malloc(sizeof(char*));
     if (!retval) return NULL;
     retval = fgets(retval, 500, fp);
@@ -451,9 +443,54 @@ char *read_line(FILE *fp) {
     */
 }
 
+
+
+
 /* Task 5.2 */
 game_state_t *load_board(FILE *fp) {
 
+    game_state_t* loaded = malloc(sizeof(game_state_t)); //NOT sizeof loaded
+    if (!loaded) return NULL;
+
+    //copy board to temp to get numrows
+    char* temp[100000];
+    char* curr_line;
+    unsigned int row = 0;
+    while ((curr_line = read_line(fp))) {
+        temp[row] = curr_line;
+        row++;
+    }
+    loaded->num_rows = row;
+
+    //add snakes as per instructions
+    loaded->num_snakes = 0;
+    loaded->snakes = NULL;
+
+    //malloc the board
+    loaded->board = malloc(loaded->num_rows * sizeof(char*));
+    if (!loaded->board) {
+        free(loaded);
+        return NULL;
+    }
+    //copy board to loaded; WHEN DONE, FREE
+    for (unsigned int i = 0; i< loaded->num_rows; i++) {
+        long unsigned int len = strlen(temp[i]);
+        char* curr_row = malloc((len + 1) * sizeof(char));
+        if (!curr_row) {
+            for (unsigned int j = 0; j < i; j++) {
+                free(loaded->board[j]);
+            }
+            free(loaded->board);
+            free(loaded);
+            return NULL;
+        }
+        strcpy(curr_row, temp[i]);
+        loaded->board[i] = curr_row;
+    }
+    return loaded;
+
+  }
+    /* ORIGINAL
     game_state_t* loaded = malloc(sizeof(loaded));
     if (!loaded) return NULL;
     loaded->num_rows = 0;
@@ -478,8 +515,7 @@ game_state_t *load_board(FILE *fp) {
     }
     free(temp);
     return loaded;
-
-}
+    */
 
 
 
@@ -506,8 +542,9 @@ static void find_head(game_state_t *state, unsigned int snum) {
         curr_col = get_next_col(curr_col, curr_char);
         curr_char = state->board[curr_row][curr_col];
     }
-    curr_s.head_row = curr_row;
-    curr_s.head_col = curr_col;
+    //to change must go into snakes, NOT just update curr_s......
+    state->snakes[snum].head_row = curr_row;
+    state->snakes[snum].head_col = curr_col;
     return;
 }
 
