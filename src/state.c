@@ -417,8 +417,13 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 char *read_line(FILE *fp) {
     //make temp
     char temp[100];
-    char *ptr = fgets(temp, sizeof(temp),fp);
+    char* ptr = fgets(temp, sizeof(temp), fp);
     if (!ptr) return NULL;
+    char* ended = strchr(ptr, '\n');
+    while (!ended) {
+    strcat(temp, fgets(temp, sizeof(temp), fp));
+    ended = strchr(ptr, '\n');
+    }
     long unsigned int length = strlen(temp);
     char* retval = malloc((length + 1) * sizeof(char));
     if (!retval) return NULL;
@@ -457,6 +462,25 @@ game_state_t *load_board(FILE *fp) {
     if (!loaded) return NULL;
 
     //copy board to temp to get numrows
+    
+    loaded->num_rows = 1;
+    loaded->board = malloc(loaded->num_rows * sizeof(char*));
+    if (!loaded->board) {
+    free(loaded);
+    return NULL;
+    }
+    char* curr_line = read_line(fp);
+    while (curr_line) {
+    loaded->board = realloc(loaded->board, (loaded->num_rows + 1) * sizeof(char*));
+    if (!loaded->board) {
+    free(loaded);
+    return NULL;
+    }
+    loaded->board[loaded->num_rows - 1] = curr_line;
+    loaded->num_rows++;
+    curr_line = read_line(fp);
+    }
+    /*
     char* temp[100];
     char* curr_line;
     unsigned int row = 0;
@@ -465,12 +489,13 @@ game_state_t *load_board(FILE *fp) {
         row++;
     }
     loaded->num_rows = row;
-
+    */
     //add snakes as per instructions
     loaded->num_snakes = 0;
     loaded->snakes = NULL;
 
     //malloc the board
+    /*
     loaded->board = malloc(loaded->num_rows * sizeof(char*));
     if (!loaded->board) {
         free(loaded);
@@ -491,6 +516,7 @@ game_state_t *load_board(FILE *fp) {
         strcpy(curr_row, temp[i]);
         loaded->board[i] = curr_row;
     }
+    */
     return loaded;
 
   }
