@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
   }
 
   // Free the state
-  free(state);
+  free_state(state);
 
   return 0;
 }
