@@ -463,22 +463,26 @@ game_state_t *load_board(FILE *fp) {
 
     //copy board to temp to get numrows
     
-    loaded->num_rows = 1;
-    loaded->board = malloc(loaded->num_rows * sizeof(char*));
+    loaded->num_rows = 0;
+    loaded->board = malloc(0);
     if (!loaded->board) {
     free(loaded);
     return NULL;
     }
     char* curr_line = read_line(fp);
-    while (curr_line) {
-    loaded->board = realloc(loaded->board, (loaded->num_rows + 1) * sizeof(char*));
-    if (!loaded->board) {
+    if (!curr_line) {
     free(loaded);
     return NULL;
     }
-    loaded->board[loaded->num_rows - 1] = curr_line;
-    loaded->num_rows++;
-    curr_line = read_line(fp);
+    while (curr_line) {
+        loaded->num_rows++;
+        loaded->board = realloc(loaded->board, (loaded->num_rows) * sizeof(char*));
+        if (!loaded->board) {
+            free(loaded);
+            return NULL;
+        }
+        loaded->board[loaded->num_rows - 1] = curr_line;
+        curr_line = read_line(fp);
     }
     /*
     char* temp[100];
