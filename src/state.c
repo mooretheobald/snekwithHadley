@@ -241,6 +241,8 @@ static char head_to_body(char c) {
   Returns cur_row otherwise.
 */
 static unsigned int get_next_row(unsigned int cur_row, char c) {
+    //assert(is_snake(c)); 
+    //assert_true("Should be a snake",is_snake(c));
     switch (c) {
         case 'v':
             return cur_row + 1;
@@ -305,11 +307,11 @@ static char next_square(game_state_t *state, unsigned int snum) {
 
     */
   //other
-  snake_t curr_s = state->snakes[snum];
-  char s = get_board_at(state, curr_s.head_row,curr_s.head_col);
+  //snake_t curr_s = state->snakes[snum];
+  char s = get_board_at(state, state->snakes[snum].head_row,state->snakes[snum].head_col);
   //get next stuff from head
-  unsigned int next_row = get_next_row(curr_s.head_row,s);
-  unsigned int next_col = get_next_col(curr_s.head_col,s);
+  unsigned int next_row = get_next_row(state->snakes[snum].head_row,s);
+  unsigned int next_col = get_next_col(state->snakes[snum].head_col,s);
   //return board at this new spot
   return get_board_at(state, next_row, next_col);
 
@@ -371,6 +373,8 @@ static void update_tail(game_state_t *state, unsigned int snum) {
   
   return;
 }
+
+
 
 /* Task 4.5 */
 void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
