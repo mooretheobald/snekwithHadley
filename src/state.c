@@ -412,7 +412,7 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 /* Task 5.1 */
 char *read_line(FILE *fp) {
     //make temp
-    char temp[100000];
+    char temp[100];
     char *ptr = fgets(temp, sizeof(temp),fp);
     if (!ptr) return NULL;
     long unsigned int length = strlen(temp);
@@ -453,7 +453,7 @@ game_state_t *load_board(FILE *fp) {
     if (!loaded) return NULL;
 
     //copy board to temp to get numrows
-    char* temp[100000];
+    char* temp[100];
     char* curr_line;
     unsigned int row = 0;
     while ((curr_line = read_line(fp))) {
