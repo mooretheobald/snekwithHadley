@@ -537,7 +537,7 @@ static void find_head(game_state_t *state, unsigned int snum) {
 
     char curr_char = state->board[curr_row][curr_col];
 
-    while (!is_head(curr_char)) {
+    while (!is_head(curr_char) && is_snake(curr_char)) { //ADDED is_snake
         curr_row = get_next_row(curr_row, curr_char);
         curr_col = get_next_col(curr_col, curr_char);
         curr_char = state->board[curr_row][curr_col];

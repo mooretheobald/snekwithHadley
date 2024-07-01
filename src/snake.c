@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   /* Task 7 */
 
   // Read board from file, or create default board
-  if (in_filename != NULL) {
+  if (in_filename) {
     // Load the board from in_filename
     FILE *file = fopen(in_filename, "r");
     if (!file) return -1;
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     state = initialize_snakes(state);
   } else if (io_stdin) {
     // Load the board from stdin
-    state = load_board(stdin);
+    state = load_board(stdin); //CHANGED FROM stdin ************
     // Then call initialize_snakes on the state you made
     state = initialize_snakes(state);
   } else {
