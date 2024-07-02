@@ -445,6 +445,7 @@ char *read_line(FILE *fp) {
     return retval;
     */
 
+    //
     char* temp = malloc(100);
     char* ptr = fgets(temp, 100, fp);
     if (!ptr) return NULL;
@@ -453,8 +454,8 @@ char *read_line(FILE *fp) {
     while (!ended) {
         temp = realloc(temp, 100 * incrementer);
         if (!temp) return NULL;
-        if (!fgets(temp + (100 * (incrementer - 1)), 100, fp));
-        ended = strchr(ptr, '\n');
+        if (!fgets(temp + (100 * (incrementer - 1)), 100, fp)) return NULL;
+        ended = strchr(temp, '\n');
         incrementer++;
     }
     char* retval = malloc((strlen(temp) + 1) * sizeof(char));
@@ -462,25 +463,26 @@ char *read_line(FILE *fp) {
     strcpy(retval, temp);
     free(temp);
     return retval;
+    //
 
 
     /*
-    char* retval = malloc(sizeof(char*));
+    char* retval = malloc(100);
     if (!retval) return NULL;
-    fgets(retval, sizeof(retval), fp);
-    if (!retval) return NULL;
+    if (!fgets(retval, 100, fp)) return NULL;
     char* ended = strchr(retval, '\n');
-    char* temp = malloc(100);
+    size_t incrementer = 2;
     while (!ended) {
-        retval = realloc(retval, 2 * sizeof(char*));
-        if (!retval) {
-        free(temp);
-        return NULL;
-        }
-        strcat(retval, fgets(temp, sizeof(char*), fp));
+        retval = realloc(retval, incrementer * 100);
+        if (!retval) return NULL;
+        if (!fgets(retval + (100 * incrementer - 1), 100, fp)) return NULL;
         ended = strchr(retval, '\n');
+        incrementer++;
     }
-    free(temp);
+    incrementer = strlen(retval);
+    retval = realloc(retval, incrementer + 1);
+    if (!retval) return NULL;
+    retval[incrementer] = '\n';
     return retval;
     */
 
