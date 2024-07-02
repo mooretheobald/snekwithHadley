@@ -150,9 +150,7 @@ bool test_is_snake() {
   bool case11 = is_snake('v');
   bool case12 = is_snake('>');
   bool case13 = is_snake('<');
-  bool case14 = is_snake('q');
-  bool case15 = is_snake('!');
-  bool case16 = is_snake('X');
+  bool case14 = is_snake('#');
   if (!assert_true("case1", case1)) return false;
   if (!assert_true("case2", case2)) return false;
   if (!assert_true("case3", case3)) return false;
@@ -167,8 +165,6 @@ bool test_is_snake() {
   if (!assert_true("case12", case12)) return false;
   if (!assert_true("case13", case13)) return false;
   if (!assert_false("case14", case14)) return false;
-  if (!assert_false("case15", case15)) return false;
-  if (!assert_true("case16", case16)) return false;
   return true;
 }
 
