@@ -445,18 +445,22 @@ char *read_line(FILE *fp) {
     return retval;
     */
 
-    char temp[100];
-    char* ptr = fgets(temp, sizeof(temp), fp);
+    char* temp = malloc(100);
+    char* ptr = fgets(temp, 100, fp);
     if (!ptr) return NULL;
     char* ended = strchr(ptr, '\n');
+    size_t incrementer = 2;
     while (!ended) {
-    strcat(temp, fgets(temp, sizeof(temp), fp));
-    ended = strchr(ptr, '\n');
+        temp = realloc(temp, 100 * incrementer);
+        if (!temp) return NULL;
+        if (!fgets(temp + (100 * (incrementer - 1)), 100, fp));
+        ended = strchr(ptr, '\n');
+        incrementer++;
     }
-    long unsigned int length = strlen(temp);
-    char* retval = malloc((length + 1) * sizeof(char));
+    char* retval = malloc((strlen(temp) + 1) * sizeof(char));
     if (!retval) return NULL;
     strcpy(retval, temp);
+    free(temp);
     return retval;
 
 
