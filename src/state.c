@@ -30,6 +30,7 @@ game_state_t *create_default_state() {
   game_state_t * default_board;
   
   default_board = malloc(sizeof(game_state_t));
+  if (!default_board) return NULL;
   
   default_board->num_rows = 18;
   
@@ -37,11 +38,19 @@ game_state_t *create_default_state() {
 
 
   //making the board which is an array of strings
-  default_board-> board = malloc(default_board->num_rows * sizeof(char *)); //allocate memory
+  default_board->board = malloc(default_board->num_rows * sizeof(char *)); //allocate memory
                              //HARDCODE THE BOARD //board = malloc(sizeof(inner thing));
+  if(!default_board->board) {
+  free(default_board);
+  return NULL;
+  }
   //Allocate memory for each row:
   for (int i = 0; i < default_board->num_rows; i++) {
     default_board->board[i] = malloc(22 * sizeof(char)); //20 columns + 1 for new line + 1 for null terminator!
+    if(!default_board->board[i]) {
+    free_state(default_board);
+    return NULL;
+    }
   }
   //Hardcoded layout:
   const char* initial_board[] = {
@@ -77,6 +86,10 @@ game_state_t *create_default_state() {
 
   //make snakes and all; initiailze the snake
   default_board->snakes = malloc(default_board->num_snakes * sizeof(snake_t)); //makes snake w room for 1 snake
+  if (!default_board->snakes) {
+  free_state(default_board);
+  return NULL;
+  }
                                                                     
   //5 attributes to fill in!!!
   default_board->snakes[0].tail_row = 2;
@@ -122,13 +135,15 @@ game_state_t *create_default_state() {
 void free_state(game_state_t *state) {
   // SHOULD WE CHECK IF THEY EXIST??
   //free each string on rows
-   for (int i = 0; i< state->num_rows; i++) {
-       free(state->board[i]);
+   if (state->board) {
+        for (int i = 0; i< state->num_rows; i++) {
+            if (state->board[i]) free(state->board[i]);
+        }
    }
    //free board array attribute
-   free(state->board);
+   if (state->board) free(state->board);
    //free snake array attribute
-   free(state->snakes);
+   if (state->snakes) free(state->snakes);
    //free state pointer
    free(state);
    return;
@@ -416,13 +431,16 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 /* Task 5.1 */
 char *read_line(FILE *fp) {
     char* temp = malloc(101);
-    fgets(temp, 101, fp);
+    if (!fgets(temp, 101, fp)) {
+    free(temp);
+    return NULL;
+    }
     char* ended = strchr(temp, '\n');
     size_t incrementer = 2;
     while (!ended) {
         temp = realloc(temp, 100 * incrementer + 1);
         if (!temp) return NULL;
-        if (!fgets(temp + (100 * (incrementer - 1)), 100, fp)) {
+        if (!fgets(temp + (100 * (incrementer - 1)), 101, fp)) {
         free(temp);
         return NULL;
         }
@@ -446,11 +464,7 @@ game_state_t *load_board(FILE *fp) {
     //copy board to temp to get numrows
     
     loaded->num_rows = 0;
-    loaded->board = malloc(0);
-    if (!loaded->board) {
-        free(loaded);
-        return NULL;
-    }
+    loaded->board = NULL;
     char* curr_line = read_line(fp);
     if (!curr_line) {
         free(loaded);
@@ -566,8 +580,9 @@ static void find_head(game_state_t *state, unsigned int snum) {
 
 /* Task 6.2 */
 game_state_t *initialize_snakes(game_state_t *state) {
-    unsigned int numsnakes = 0;
-    snake_t temp_snakes[100];
+    size_t tempnumsnek = 100;
+    state->snakes = malloc(tempnumsnek * sizeof(snake_t));
+    if (!state->snakes) return NULL;
     //iterate through the whole board
     for (unsigned int row = 0; row < state->num_rows; row++) {
         for (unsigned int col = 0; col < strlen(state->board[row]); col ++) {
@@ -575,27 +590,32 @@ game_state_t *initialize_snakes(game_state_t *state) {
             if (is_tail(next_char)) {
                 //if there is a tail, fill in temp w the snake info
                 //snake_t curr_s = temp_snakes[numsnakes];
-                temp_snakes[numsnakes].live = true;
-                temp_snakes[numsnakes].tail_row = row;
-                temp_snakes[numsnakes].tail_col = col;
-                numsnakes++;
+                state->snakes[state->num_snakes].live = true;
+                state->snakes[state->num_snakes].tail_row = row;
+                state->snakes[state->num_snakes].tail_col = col;
+                state->num_snakes++;
+                if (state->num_snakes > tempnumsnek - 2) {
+                    tempnumsnek *=2;
+                    state->snakes = realloc(state->snakes, tempnumsnek * sizeof(snake_t));
+                    if (!state->snakes) return NULL;
+                }
             }
         }
     }
 
     //set up ret board snakes array
+    if (state->num_snakes == 0) return state;
 
-    state->num_snakes = numsnakes;
-    state->snakes = malloc(state->num_snakes * sizeof(snake_t));
+    state->snakes = realloc(state->snakes, state->num_snakes * sizeof(snake_t));
+    if (!state->snakes) return NULL;
 
     //fill in the state from the temp snakes array
 
-   for (unsigned int s = 0; s < state->num_snakes; s++) {
-    state->snakes[s] = temp_snakes[s];
+    for (unsigned int s = 0; s < state->num_snakes; s++) {
     //calling find head finds and sets the head
     find_head(state, s);
-  }
-  return state;
+    }
+    return state;
 }
 
 
