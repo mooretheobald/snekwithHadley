@@ -415,92 +415,23 @@ void update_state(game_state_t *state, int (*add_food)(game_state_t *state)) {
 
 /* Task 5.1 */
 char *read_line(FILE *fp) {
-    /*
-    char* temp = malloc(100);
-    if (!temp) return NULL;
-    fgets(temp, 100, fp);
-    if (!temp) return NULL;
+    char* temp = malloc(101);
+    fgets(temp, 101, fp);
     char* ended = strchr(temp, '\n');
-    char* temp2 = malloc(100); // free later
+    size_t incrementer = 2;
     while (!ended) {
-        temp = realloc(temp, 100 + sizeof(temp));
-        if (!temp) {
-        free(temp2);
+        temp = realloc(temp, 100 * incrementer + 1);
+        if (!temp) return NULL;
+        if (!fgets(temp + (100 * (incrementer - 1)), 100, fp)) {
+        free(temp);
         return NULL;
         }
-        temp2 = fgets(temp2, 100, fp);
-        strcat(temp, temp2);
-        ended = strchr(temp, '\n');
-    }
-    size_t rowlen = strlen(temp);
-    char* retval = malloc(rowlen * sizeof(char) + 1);
-    if (!retval) {
-    free(temp);
-    free(temp2);
-    return NULL;
-    }
-    strcpy(retval, temp);
-    free(temp);
-    free(temp2);
-    return retval;
-    */
-
-    //
-    char* temp = malloc(100);
-    char* ptr = fgets(temp, 100, fp);
-    if (!ptr) return NULL;
-    char* ended = strchr(ptr, '\n');
-    size_t incrementer = 2;
-    while (!ended) {
-        temp = realloc(temp, 100 * incrementer);
-        if (!temp) return NULL;
-        if (!fgets(temp + (100 * (incrementer - 1)), 100, fp)) return NULL;
         ended = strchr(temp, '\n');
         incrementer++;
     }
-    char* retval = malloc((strlen(temp) + 1) * sizeof(char));
-    if (!retval) return NULL;
-    strcpy(retval, temp);
-    free(temp);
-    return retval;
-    //
-
-
-    /*
-    char* retval = malloc(100);
-    if (!retval) return NULL;
-    if (!fgets(retval, 100, fp)) return NULL;
-    char* ended = strchr(retval, '\n');
-    size_t incrementer = 2;
-    while (!ended) {
-        retval = realloc(retval, incrementer * 100);
-        if (!retval) return NULL;
-        if (!fgets(retval + (100 * incrementer - 1), 100, fp)) return NULL;
-        ended = strchr(retval, '\n');
-        incrementer++;
-    }
-    incrementer = strlen(retval);
-    retval = realloc(retval, incrementer + 1);
-    if (!retval) return NULL;
-    retval[incrementer] = '\n';
-    return retval;
-    */
-
-    /*
-    char* temp;
-    char* ptr = fgets(temp, sizeof(temp), fp);
-    if (!ptr) return NULL;
-    char* ended = strchr(ptr, '\n');
-    while (!ended) {
-        strcat(temp, fgets(temp, sizeof(temp), fp));
-        ended = strchr(ptr, '\n');
-    }
-    long unsigned int length = strlen(temp);
-    char* retval = malloc((length + 1) * sizeof(char));
-    if (!retval) return NULL;
-    strcpy(retval, temp);
-    return retval;
-    */
+    temp = realloc(temp, strlen(temp) + 1);
+    if (!temp) return NULL;
+    return temp;
 }
 
 
